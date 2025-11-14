@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Data Stored</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="success">✅ User Profile Saved Successfully!</div>
+
+    <p><b>Name:</b> {{ name }}</p>
+    <p><b>Date of Birth:</b> {{ dob }}</p>
+    <p><b>Gender:</b> {{ gender }}</p>
+
+    <div class="hash-box">
+        <h3>🔐 Aadhaar SHA-256 Hash:</h3>
+        <p class="mono">{{ aadhaar_hash }}</p>
+        <small>This hashed Aadhaar is used for privacy-preserving verifications.</small>
+    </div>
+
+    <br>
+
+    <a class="btn" href="/">Go Home</a>
+    <a class="btn" href="/access_request">Generate Token</a>
+
+</div>
+
+</body>
+</html>
