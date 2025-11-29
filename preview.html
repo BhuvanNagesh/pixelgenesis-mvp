@@ -1,896 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PixelGenesis — UI Preview</title>
-    <style>
-        /* ===============================================
-           PIXELGENESIS — FUTURISTIC CYBER-GREEN THEME
-           Midnight Blockchain Track 3: Privacy Mini DApps
-           =============================================== */
-
-        :root {
-            --dark-bg: #0A1E17;
-            --deep-green: #0F3E2E;
-            --neon-green: #1FA973;
-            --mint-glow: #C2FBE1;
-            --white: #FFFFFF;
-            --glass-bg: rgba(15, 62, 46, 0.4);
-            --glass-border: rgba(31, 169, 115, 0.3);
-        }
-
-        /* ===== GLOBAL RESET ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        /* ===== FUTURISTIC FONT ===== */
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
-
-        body {
-            font-family: 'Rajdhani', sans-serif;
-            background: var(--dark-bg);
-            color: var(--white);
-            min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        /* ===== ANIMATED BACKGROUND ===== */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background:
-                radial-gradient(circle at 20% 50%, rgba(31, 169, 115, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(15, 62, 46, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 40% 20%, rgba(194, 251, 225, 0.05) 0%, transparent 40%);
-            pointer-events: none;
-            z-index: 0;
-            animation: bgPulse 8s ease-in-out infinite;
-        }
-
-        @keyframes bgPulse {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; }
-        }
-
-        /* ===== SCANNING LINES ===== */
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--neon-green), transparent);
-            box-shadow: 0 0 20px var(--neon-green);
-            animation: scan 4s linear infinite;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        @keyframes scan {
-            0% { transform: translateY(0); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(100vh); opacity: 0; }
-        }
-
-        /* ===== CONTAINER ===== */
-        .container {
-            position: relative;
-            z-index: 10;
-            max-width: 650px;
-            margin: 60px auto;
-            padding: 40px;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            backdrop-filter: blur(20px);
-            box-shadow:
-                0 8px 32px rgba(0, 0, 0, 0.4),
-                inset 0 1px 0 rgba(31, 169, 115, 0.2),
-                0 0 60px rgba(31, 169, 115, 0.1);
-            animation: containerGlow 3s ease-in-out infinite;
-        }
-
-        @keyframes containerGlow {
-            0%, 100% { box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(31, 169, 115, 0.2), 0 0 60px rgba(31, 169, 115, 0.1); }
-            50% { box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(31, 169, 115, 0.3), 0 0 80px rgba(31, 169, 115, 0.2); }
-        }
-
-        /* ===== HEADINGS ===== */
-        h1, h2, h3, h4 {
-            font-family: 'Orbitron', sans-serif;
-            color: var(--neon-green);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 24px;
-            text-shadow: 0 0 20px rgba(31, 169, 115, 0.6);
-            animation: textGlow 2s ease-in-out infinite;
-        }
-
-        @keyframes textGlow {
-            0%, 100% { text-shadow: 0 0 20px rgba(31, 169, 115, 0.6); }
-            50% { text-shadow: 0 0 30px rgba(31, 169, 115, 0.9), 0 0 40px rgba(194, 251, 225, 0.4); }
-        }
-
-        h1 { font-size: 2.5rem; font-weight: 900; }
-        h2 { font-size: 2rem; font-weight: 700; }
-        h3 { font-size: 1.5rem; font-weight: 600; }
-
-        .subtitle {
-            color: var(--mint-glow);
-            font-size: 1.1rem;
-            font-weight: 400;
-            margin-bottom: 32px;
-            opacity: 0.9;
-        }
-
-        /* ===== LABELS ===== */
-        label {
-            display: block;
-            margin-top: 20px;
-            margin-bottom: 8px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            color: var(--mint-glow);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* ===== INPUTS ===== */
-        input[type="text"],
-        input[type="number"],
-        input[type="password"],
-        input[type="date"],
-        input[type="file"],
-        textarea,
-        select {
-            width: 100%;
-            padding: 14px 16px;
-            margin-top: 6px;
-            background: rgba(15, 62, 46, 0.3);
-            border: 1px solid var(--glass-border);
-            border-radius: 10px;
-            font-size: 1rem;
-            color: var(--white);
-            font-family: 'Rajdhani', sans-serif;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-
-        input:focus,
-        textarea:focus,
-        select:focus {
-            outline: none;
-            border-color: var(--neon-green);
-            background: rgba(15, 62, 46, 0.5);
-            box-shadow:
-                0 0 20px rgba(31, 169, 115, 0.3),
-                inset 0 0 10px rgba(31, 169, 115, 0.1);
-            animation: inputScan 0.4s ease;
-        }
-
-        @keyframes inputScan {
-            0% { box-shadow: 0 -2px 0 var(--neon-green); }
-            100% { box-shadow: 0 0 20px rgba(31, 169, 115, 0.3), inset 0 0 10px rgba(31, 169, 115, 0.1); }
-        }
-
-        textarea {
-            min-height: 120px;
-            resize: vertical;
-            font-family: 'Courier New', monospace;
-        }
-
-        /* ===== BUTTONS ===== */
-        button,
-        .btn {
-            position: relative;
-            display: inline-block;
-            margin-top: 24px;
-            margin-right: 12px;
-            padding: 14px 32px;
-            background: linear-gradient(135deg, var(--neon-green), var(--deep-green));
-            color: var(--white);
-            border: 1px solid var(--neon-green);
-            border-radius: 10px;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            cursor: pointer;
-            text-decoration: none;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(31, 169, 115, 0.3);
-        }
-
-        button::before,
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(194, 251, 225, 0.4);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s ease, height 0.6s ease;
-        }
-
-        button:hover::before,
-        .btn:hover::before {
-            width: 300px;
-            height: 300px;
-        }
-
-        button:hover,
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow:
-                0 6px 25px rgba(31, 169, 115, 0.5),
-                0 0 40px rgba(31, 169, 115, 0.3);
-            border-color: var(--mint-glow);
-        }
-
-        button span,
-        .btn span {
-            position: relative;
-            z-index: 1;
-        }
-
-        /* ===== SUCCESS ===== */
-        .success {
-            padding: 16px 20px;
-            background: rgba(31, 169, 115, 0.2);
-            border: 1px solid var(--neon-green);
-            border-left: 4px solid var(--neon-green);
-            color: var(--mint-glow);
-            border-radius: 10px;
-            margin-bottom: 24px;
-            animation: slideIn 0.4s ease;
-            box-shadow: 0 0 20px rgba(31, 169, 115, 0.2);
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        /* ===== GLOWING MONO BOX ===== */
-        .mono-box {
-            background: rgba(10, 30, 23, 0.8);
-            border: 1px solid var(--neon-green);
-            border-radius: 10px;
-            padding: 16px;
-            margin: 20px 0;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-            color: var(--mint-glow);
-            word-break: break-all;
-            position: relative;
-            overflow: hidden;
-            box-shadow:
-                inset 0 0 20px rgba(31, 169, 115, 0.1),
-                0 0 30px rgba(31, 169, 115, 0.2);
-            animation: borderPulse 2s ease-in-out infinite;
-        }
-
-        @keyframes borderPulse {
-            0%, 100% { border-color: var(--neon-green); }
-            50% { border-color: var(--mint-glow); }
-        }
-
-        .mono-box::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(31, 169, 115, 0.2), transparent);
-            animation: shimmer 3s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        /* ===== HOME PAGE CARD ===== */
-        .home-card {
-            position: relative;
-            z-index: 10;
-            max-width: 800px;
-            margin: 80px auto;
-            padding: 60px;
-            background: var(--glass-bg);
-            border: 2px solid var(--glass-border);
-            border-radius: 24px;
-            backdrop-filter: blur(20px);
-            box-shadow:
-                0 8px 32px rgba(0, 0, 0, 0.5),
-                inset 0 1px 0 rgba(31, 169, 115, 0.3),
-                0 0 80px rgba(31, 169, 115, 0.15);
-        }
-
-        .home-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2.8rem;
-            font-weight: 900;
-            color: var(--neon-green);
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 16px;
-            text-shadow: 0 0 30px rgba(31, 169, 115, 0.8);
-            animation: titlePulse 3s ease-in-out infinite;
-        }
-
-        @keyframes titlePulse {
-            0%, 100% {
-                text-shadow: 0 0 30px rgba(31, 169, 115, 0.8);
-                transform: scale(1);
-            }
-            50% {
-                text-shadow: 0 0 50px rgba(31, 169, 115, 1), 0 0 70px rgba(194, 251, 225, 0.5);
-                transform: scale(1.02);
-            }
-        }
-
-        .home-sub {
-            font-size: 1.2rem;
-            color: var(--mint-glow);
-            margin-bottom: 40px;
-            line-height: 1.6;
-            opacity: 0.9;
-        }
-
-        .links-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .links-list li {
-            margin: 16px 0;
-            font-size: 1.3rem;
-            padding: 16px 20px;
-            background: rgba(15, 62, 46, 0.3);
-            border: 1px solid rgba(31, 169, 115, 0.3);
-            border-radius: 12px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .links-list li:hover {
-            background: rgba(31, 169, 115, 0.2);
-            border-color: var(--neon-green);
-            transform: translateX(10px);
-            box-shadow: 0 0 30px rgba(31, 169, 115, 0.3);
-        }
-
-        .links-list li a {
-            display: block;
-            width: 100%;
-            color: var(--white);
-            text-decoration: none;
-        }
-
-        /* ===== FLOATING PARTICLES ===== */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 5;
-        }
-
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: var(--neon-green);
-            border-radius: 50%;
-            box-shadow: 0 0 10px var(--neon-green);
-            animation: float 15s infinite;
-            opacity: 0.6;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
-            10% { opacity: 0.6; }
-            90% { opacity: 0.6; }
-            100% { transform: translateY(-100px) translateX(100px); opacity: 0; }
-        }
-
-        .particle:nth-child(2) { left: 20%; animation-delay: 2s; animation-duration: 12s; }
-        .particle:nth-child(3) { left: 40%; animation-delay: 4s; animation-duration: 18s; }
-        .particle:nth-child(4) { left: 60%; animation-delay: 1s; animation-duration: 14s; }
-        .particle:nth-child(5) { left: 80%; animation-delay: 3s; animation-duration: 16s; }
-
-        /* ===== TABS ===== */
-        .tabs {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 30px;
-            border-bottom: 2px solid rgba(31, 169, 115, 0.3);
-        }
-
-        .tab {
-            padding: 12px 24px;
-            background: rgba(15, 62, 46, 0.3);
-            border: 1px solid rgba(31, 169, 115, 0.3);
-            border-bottom: none;
-            border-radius: 8px 8px 0 0;
-            cursor: pointer;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            color: var(--mint-glow);
-        }
-
-        .tab:hover {
-            background: rgba(31, 169, 115, 0.2);
-        }
-
-        .tab.active {
-            background: var(--neon-green);
-            color: var(--dark-bg);
-            border-color: var(--neon-green);
-            box-shadow: 0 -5px 20px rgba(31, 169, 115, 0.4);
-        }
-
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.4s ease;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ===== CHIP ===== */
-        .chip {
-            display: inline-block;
-            padding: 10px 20px;
-            background: linear-gradient(135deg, var(--neon-green), var(--deep-green));
-            border: 1px solid var(--neon-green);
-            border-radius: 20px;
-            color: var(--white);
-            font-weight: 600;
-            margin: 10px 0;
-            animation: chipGlow 2s ease-in-out infinite;
-        }
-
-        @keyframes chipGlow {
-            0%, 100% { box-shadow: 0 0 15px rgba(31, 169, 115, 0.4); }
-            50% { box-shadow: 0 0 30px rgba(31, 169, 115, 0.7); }
-        }
-
-        /* ===== CHECKMARK ===== */
-        .checkmark {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            display: block;
-            stroke-width: 3;
-            stroke: var(--neon-green);
-            stroke-miterlimit: 10;
-            margin: 30px auto;
-            box-shadow: inset 0 0 0 var(--neon-green);
-            animation: fill 0.4s ease-in-out 0.4s forwards, scale 0.3s ease-in-out 0.9s both;
-        }
-
-        .checkmark-circle {
-            stroke-dasharray: 166;
-            stroke-dashoffset: 166;
-            stroke-width: 2;
-            stroke-miterlimit: 10;
-            stroke: var(--neon-green);
-            fill: none;
-            animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
-        }
-
-        .checkmark-check {
-            transform-origin: 50% 50%;
-            stroke-dasharray: 48;
-            stroke-dashoffset: 48;
-            animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
-        }
-
-        @keyframes stroke {
-            100% { stroke-dashoffset: 0; }
-        }
-
-        @keyframes scale {
-            0%, 100% { transform: none; }
-            50% { transform: scale3d(1.1, 1.1, 1); }
-        }
-
-        @keyframes fill {
-            100% { box-shadow: inset 0 0 0 40px var(--neon-green); }
-        }
-
-        /* ===== SECTION DIVIDER ===== */
-        .section {
-            margin: 60px 0;
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 768px) {
-            .container, .home-card {
-                margin: 30px 20px;
-                padding: 30px 20px;
-            }
-
-            h1, .home-title { font-size: 2rem; }
-            h2 { font-size: 1.5rem; }
-
-            .tabs { flex-direction: column; }
-        }
-
-        /* ===== NAV BAR ===== */
-        .preview-nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: rgba(10, 30, 23, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 15px 30px;
-            z-index: 1000;
-            border-bottom: 1px solid var(--glass-border);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .nav-links a {
-            color: var(--mint-glow);
-            text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-        }
-
-        .nav-links a:hover {
-            background: rgba(31, 169, 115, 0.2);
-            color: var(--neon-green);
-        }
-
-        .nav-links a.active {
-            background: var(--neon-green);
-            color: var(--dark-bg);
-        }
-
-        .content-wrapper {
-            margin-top: 80px;
-        }
-    </style>
-</head>
-<body>
-    <div class="particles">
-        <div class="particle" style="left: 10%;"></div>
-        <div class="particle" style="left: 20%;"></div>
-        <div class="particle" style="left: 40%;"></div>
-        <div class="particle" style="left: 60%;"></div>
-        <div class="particle" style="left: 80%;"></div>
-    </div>
-
-    <nav class="preview-nav">
-        <div class="nav-links">
-            <a href="#home" class="active" onclick="showSection('home')">Home</a>
-            <a href="#create-did" onclick="showSection('create-did')">Create DID</a>
-            <a href="#tokens" onclick="showSection('tokens')">Generate Tokens</a>
-            <a href="#success" onclick="showSection('success')">Success View</a>
-            <a href="#shamir" onclick="showSection('shamir')">Shamir Recovery</a>
-        </div>
-    </nav>
-
-    <div class="content-wrapper">
-        <!-- HOME SECTION -->
-        <div id="home" class="section active">
-            <div class="home-card">
-                <div class="home-title">PixelGenesis</div>
-                <div class="home-sub">
-                    Decentralized Identity MVP — A privacy-first Mini DApp built with Zero-Knowledge concepts on Midnight
-                </div>
-
-                <ul class="links-list">
-                    <li><a href="#create-did" onclick="showSection('create-did')">🔐 Create DID</a></li>
-                    <li><a href="#" onclick="return false;">🔑 Login with Private Key</a></li>
-                    <li><a href="#" onclick="return false;">📝 Add User Profile</a></li>
-                    <li><a href="#tokens" onclick="showSection('tokens')">🎫 Generate Token</a></li>
-                    <li><a href="#" onclick="return false;">✅ Verify Token</a></li>
-                    <li><a href="#" onclick="return false;">📊 View All Tokens</a></li>
-                    <li><a href="#shamir" onclick="showSection('shamir')">🧩 Shamir Secret Recovery</a></li>
-                    <li><a href="#" onclick="return false;">✍️ Sign Verifiable Credential</a></li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- CREATE DID SECTION -->
-        <div id="create-did" class="section" style="display: none;">
-            <div class="container">
-                <h2>🔐 Create Decentralized Identity</h2>
-                <p class="subtitle">Generate your private DID with zero-knowledge cryptography</p>
-
-                <div class="success">
-                    ✓ DID Successfully Generated
-                </div>
-
-                <div class="ripple" style="width: 120px; height: 120px; margin: 30px auto; background: rgba(31, 169, 115, 0.2); border-radius: 50%; border: 2px solid var(--neon-green);"></div>
-
-                <div style="margin-top: 30px;">
-                    <label>Decentralized Identifier (DID)</label>
-                    <div class="mono-box">did:pg:a8f4e9c2b7d1f6a3e8c5b2d9f1a4e7c3</div>
-                </div>
-
-                <div style="margin-top: 30px;">
-                    <label>Public Key</label>
-                    <div class="mono-box">04a8f4e9c2b7d1f6a3e8c5b2d9f1a4e7c3b5d8e1f4a7c0d3e6f9b2c5d8e1f4a7</div>
-                </div>
-
-                <div style="margin-top: 30px;">
-                    <label>Private Key</label>
-                    <div class="mono-box" style="border-color: #ef4444; box-shadow: inset 0 0 20px rgba(239, 68, 68, 0.1), 0 0 30px rgba(239, 68, 68, 0.2);">c3b5d8e1f4a7c0d3e6f9b2c5d8e1f4a7a8f4e9c2b7d1f6a3e8c5b2d9f1a4e7</div>
-                    <p style="color: #fca5a5; margin-top: 12px; font-size: 0.95rem;">⚠️ Keep your private key secure. You'll need it to log in.</p>
-                </div>
-
-                <button onclick="showSection('home')"><span>← Back to Home</span></button>
-            </div>
-        </div>
-
-        <!-- TOKEN GENERATION SECTION -->
-        <div id="tokens" class="section" style="display: none;">
-            <div class="container" style="max-width: 750px;">
-                <h2>🎫 Generate Access Token</h2>
-                <p class="subtitle">Create privacy-preserving zero-knowledge tokens</p>
-
-                <div class="tabs">
-                    <div class="tab active" onclick="switchTab('mode-a')">Mode A: Selective Disclosure</div>
-                    <div class="tab" onclick="switchTab('mode-b')">Mode B: Predicate Proof</div>
-                    <div class="tab" onclick="switchTab('mode-c')">Mode C: File Upload</div>
-                </div>
-
-                <div id="mode-a" class="tab-content active">
-                    <label for="field">Select Attribute</label>
-                    <select id="field">
-                        <option value="name">Name</option>
-                        <option value="dob">Date of Birth</option>
-                        <option value="gender">Gender</option>
-                        <option value="aadhaar_hash">Aadhaar Hash</option>
-                    </select>
-                    <p style="color: var(--mint-glow); margin-top: 12px; font-size: 0.95rem;">
-                        📌 Only the selected attribute will be shared. Other data remains private.
-                    </p>
-
-                    <div style="text-align: center; margin: 30px 0;">
-                        <div class="chip">Attribute: Name</div>
-                    </div>
-                </div>
-
-                <div id="mode-b" class="tab-content">
-                    <label>Field Name</label>
-                    <input type="text" value="age" readonly>
-
-                    <label>Condition</label>
-                    <select>
-                        <option value="gt">Greater Than (&gt;)</option>
-                        <option value="ge">Greater or Equal (≥)</option>
-                        <option value="eq">Equal (=)</option>
-                        <option value="in">Contains (∈)</option>
-                    </select>
-
-                    <label>Comparison Value</label>
-                    <input type="text" value="18" readonly>
-
-                    <div style="background: rgba(31, 169, 115, 0.15); border: 1px dashed var(--neon-green); border-radius: 10px; padding: 20px; margin-top: 30px; text-align: center;">
-                        <p style="font-size: 1.1rem; color: var(--mint-glow); margin-bottom: 10px;">
-                            🔐 Zero-Knowledge Predicate
-                        </p>
-                        <p style="color: var(--white); font-size: 0.95rem;">
-                            Verify statements without revealing raw data
-                        </p>
-                        <div style="margin-top: 15px; padding: 12px; background: rgba(10, 30, 23, 0.6); border-radius: 8px; font-family: 'Courier New', monospace; color: var(--neon-green);">
-                            Prove: age &gt; 18 → TRUE/FALSE
-                        </div>
-                    </div>
-                </div>
-
-                <div id="mode-c" class="tab-content">
-                    <label>Choose File</label>
-                    <input type="file">
-
-                    <div style="background: rgba(15, 62, 46, 0.3); border: 1px solid var(--glass-border); border-radius: 12px; padding: 20px; margin-top: 24px;">
-                        <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
-                            <input type="checkbox" style="margin-right: 12px; width: auto;">
-                            <span style="font-size: 1.1rem;">🔐 Encrypt file with AES-256 + Shamir Secret Sharing (2-of-3)</span>
-                        </label>
-                        <p style="color: var(--mint-glow); margin-top: 12px; font-size: 0.9rem; margin-left: 30px;">
-                            File will be encrypted before upload. Decryption requires 2 out of 3 secret shards.
-                        </p>
-                    </div>
-
-                    <div style="text-align: center; margin: 30px 0;">
-                        <div style="width: 140px; height: 140px; margin: 0 auto; background: rgba(31, 169, 115, 0.1); border-radius: 50%; border: 2px dashed var(--neon-green); display: flex; align-items: center; justify-content: center; flex-direction: column; font-size: 2.5rem;">
-                            🗂️
-                            <span style="font-size: 0.9rem; margin-top: 8px; color: var(--mint-glow);">Encrypted Upload</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div style="margin-top: 30px; padding-top: 30px; border-top: 1px solid rgba(31, 169, 115, 0.3);">
-                    <label>Token Expiry (seconds)</label>
-                    <input type="number" placeholder="300 (default)" value="300">
-                    <p style="color: var(--mint-glow); margin-top: 8px; font-size: 0.9rem;">
-                        Leave empty for 300s default. Set to 0 for no expiration.
-                    </p>
-                </div>
-
-                <button onclick="showSection('success')"><span>⚡ Generate Token</span></button>
-                <button onclick="showSection('home')" style="background: rgba(15, 62, 46, 0.5); border-color: rgba(31, 169, 115, 0.5);"><span>← Back to Home</span></button>
-            </div>
-        </div>
-
-        <!-- SUCCESS SECTION -->
-        <div id="success" class="section" style="display: none;">
-            <div class="container">
-                <h2>✓ Profile Successfully Saved</h2>
-                <p class="subtitle">Your data is encrypted and secured with zero-knowledge principles</p>
-
-                <div class="success">
-                    Profile data encrypted and stored successfully
-                </div>
-
-                <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-                    <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
-                    <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
-                </svg>
-
-                <div style="margin-top: 30px;">
-                    <label>Name</label>
-                    <div class="mono-box">John Doe</div>
-                </div>
-
-                <div style="margin-top: 20px;">
-                    <label>Date of Birth</label>
-                    <div class="mono-box">1990-05-15</div>
-                </div>
-
-                <div style="margin-top: 20px;">
-                    <label>Gender</label>
-                    <div class="mono-box">male</div>
-                </div>
-
-                <div style="margin-top: 20px;">
-                    <label>Aadhaar Hash (SHA-256)</label>
-                    <div class="mono-box">a8f4e9c2b7d1f6a3e8c5b2d9f1a4e7c3b5d8e1f4a7c0d3e6f9b2c5d8e1f4a7c3</div>
-                    <p style="color: var(--mint-glow); margin-top: 12px; font-size: 0.95rem;">
-                        ✓ Original Aadhaar number was hashed and discarded. Only the cryptographic hash is retained.
-                    </p>
-                </div>
-
-                <button onclick="showSection('tokens')"><span>→ Generate Token</span></button>
-                <button onclick="showSection('home')" style="background: rgba(15, 62, 46, 0.5); border-color: rgba(31, 169, 115, 0.5);"><span>← Back to Home</span></button>
-            </div>
-        </div>
-
-        <!-- SHAMIR RECOVERY SECTION -->
-        <div id="shamir" class="section" style="display: none;">
-            <div class="container">
-                <h2>🧩 Shamir Secret Recovery</h2>
-                <p class="subtitle">Reconstruct encryption key from secret shards</p>
-
-                <p style="margin-bottom: 20px; font-size: 1.05rem; color: var(--mint-glow);">
-                    Enter ANY 2 of the 3 Shamir secret shares (one per line) to recover the encryption key.
-                </p>
-
-                <div style="text-align: center; margin: 30px 0;">
-                    <div style="display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap;">
-                        <div style="width: 100px; height: 100px; background: rgba(31, 169, 115, 0.1); border-radius: 50%; border: 2px dashed var(--neon-green); display: flex; align-items: center; justify-content: center; font-size: 2.5rem;">
-                            🔑
-                        </div>
-                        <div style="width: 100px; height: 100px; background: rgba(31, 169, 115, 0.1); border-radius: 50%; border: 2px dashed var(--neon-green); display: flex; align-items: center; justify-content: center; font-size: 2.5rem;">
-                            🔑
-                        </div>
-                        <div style="width: 100px; height: 100px; background: rgba(31, 169, 115, 0.05); border-radius: 50%; border: 2px dashed rgba(31, 169, 115, 0.3); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; opacity: 0.3;">
-                            🔑
-                        </div>
-                    </div>
-                    <p style="color: var(--mint-glow); margin-top: 16px; font-size: 0.95rem;">
-                        2 out of 3 shares required for recovery
-                    </p>
-                </div>
-
-                <label>Paste Secret Shares</label>
-                <textarea placeholder="SHARE-1:abc123...&#10;SHARE-2:def456...">SHARE-1:a8f4e9c2b7d1f6a3e8c5b2d9f1a4e7c3
-SHARE-2:b5d8e1f4a7c0d3e6f9b2c5d8e1f4a7c3</textarea>
-                <p style="color: var(--mint-glow); margin-top: 8px; font-size: 0.9rem;">
-                    Each share should be on a new line
-                </p>
-
-                <button><span>🔓 Recover Key</span></button>
-                <button onclick="showSection('home')" style="background: rgba(15, 62, 46, 0.5); border-color: rgba(31, 169, 115, 0.5);"><span>← Back to Home</span></button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        function showSection(sectionId) {
-            // Hide all sections
-            document.querySelectorAll('.section').forEach(section => {
-                section.style.display = 'none';
-            });
-
-            // Show selected section
-            document.getElementById(sectionId).style.display = 'block';
-
-            // Update nav active state
-            document.querySelectorAll('.nav-links a').forEach(link => {
-                link.classList.remove('active');
-            });
-            const activeLink = document.querySelector(`a[href="#${sectionId}"]`);
-            if (activeLink) activeLink.classList.add('active');
-
-            // Scroll to top
-            window.scrollTo(0, 0);
-
-            return false;
-        }
-
-        function switchTab(tabId) {
-            // Hide all tab contents
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
-
-            // Remove active from all tabs
-            document.querySelectorAll('.tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-
-            // Show selected tab content
-            document.getElementById(tabId).classList.add('active');
-
-            // Set clicked tab as active
-            event.target.classList.add('active');
-        }
-
-        // Initialize - show home section
-        showSection('home');
-    </script>
-</body>
-</html>
+  <meta charset="UTF-8" />
+  <title>PixelGenesis – Preview</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root {
+      --bg: #0A1E17;
+      --bg-soft: #0F3E2E;
+      --accent: #1FA973;
+      --glow: #C2FBE1;
+      --text: #FFFFFF;
+      --muted: #9CA3AF;
+      --radius: 18px;
+      --transition: 260ms ease;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+      background: radial-gradient(circle at top, #0F3E2E 0, #0A1E17 40%, #020715 100%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+    }
+    .page {
+      width: 100%;
+      max-width: 1200px;
+      padding: 32px 16px 48px;
+      margin: 0 auto;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      gap: 16px;
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .logo-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 12px var(--accent);
+      animation: pulse 1.8s infinite;
+    }
+    .tag {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(31,169,115,0.4);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--glow);
+      background: linear-gradient(120deg, rgba(31,169,115,0.1), rgba(10,30,23,0.9));
+    }
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 13px;
+    }
+    nav button {
+      background: transparent;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.3);
+      color: var(--muted);
+      padding: 6px 12px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    nav button:hover {
+      border-color: var(--accent);
+      color: var(--glow);
+      box-shadow: 0 0 12px rgba(31,169,115,0.4);
+    }
+
+    .hero {
+      background: linear-gradient(135deg, rgba(31,169,115,0.16), rgba(10,30,23,0.9));
+      border-radius: var(--radius);
+      border: 1px solid rgba(148,163,184,0.3);
+      padding: 24px 24px 20px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: "
