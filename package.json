@@ -1,0 +1,13 @@
+{
+  "name": "pixelgenesis",
+  "version": "1.0.0",
+  "description": "PixelGenesis - Decentralized Privacy Identity DApp",
+  "main": "app.py",
+  "scripts": {
+    "start": "python3 app.py",
+    "dev": "python3 app.py"
+  },
+  "keywords": ["blockchain", "privacy", "identity", "zero-knowledge"],
+  "author": "",
+  "license": "MIT"
+}
