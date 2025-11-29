@@ -1,103 +1,575 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>PixelGenesis – Preview</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <style>
-    :root {
-      --bg: #0A1E17;
-      --bg-soft: #0F3E2E;
-      --accent: #1FA973;
-      --glow: #C2FBE1;
-      --text: #FFFFFF;
-      --muted: #9CA3AF;
-      --radius: 18px;
-      --transition: 260ms ease;
-    }
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
-      background: radial-gradient(circle at top, #0F3E2E 0, #0A1E17 40%, #020715 100%);
-      color: var(--text);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: stretch;
-    }
-    .page {
-      width: 100%;
-      max-width: 1200px;
-      padding: 32px 16px 48px;
-      margin: 0 auto;
-    }
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 24px;
-      gap: 16px;
-    }
-    .logo {
-      font-size: 24px;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .logo-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 999px;
-      background: var(--accent);
-      box-shadow: 0 0 12px var(--accent);
-      animation: pulse 1.8s infinite;
-    }
-    .tag {
-      padding: 4px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(31,169,115,0.4);
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--glow);
-      background: linear-gradient(120deg, rgba(31,169,115,0.1), rgba(10,30,23,0.9));
-    }
-    nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      font-size: 13px;
-    }
-    nav button {
-      background: transparent;
-      border-radius: 999px;
-      border: 1px solid rgba(148,163,184,0.3);
-      color: var(--muted);
-      padding: 6px 12px;
-      cursor: pointer;
-      transition: var(--transition);
-    }
-    nav button:hover {
-      border-color: var(--accent);
-      color: var(--glow);
-      box-shadow: 0 0 12px rgba(31,169,115,0.4);
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PixelGenesis — Decentralized Privacy Identity DApp</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-bg: #0A1E17;
+            --deep-green: #0F3E2E;
+            --neon-green: #1FA973;
+            --mint-glow: #C2FBE1;
+            --white: #FFFFFF;
+        }
 
-    .hero {
-      background: linear-gradient(135deg, rgba(31,169,115,0.16), rgba(10,30,23,0.9));
-      border-radius: var(--radius);
-      border: 1px solid rgba(148,163,184,0.3);
-      padding: 24px 24px 20px;
-      box-shadow: 0 30px 80px rgba(0,0,0,0.5);
-      margin-bottom: 24px;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero::before {
-      content: "
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--dark-bg);
+            color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Background Animation */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(31, 169, 115, 0.08), transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(15, 62, 46, 0.12), transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+            animation: bgPulse 8s ease-in-out infinite;
+        }
+
+        @keyframes bgPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* Scanning Line */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--neon-green), transparent);
+            box-shadow: 0 0 15px var(--neon-green);
+            animation: scan 4s linear infinite;
+            z-index: 999;
+            pointer-events: none;
+        }
+
+        @keyframes scan {
+            0% { transform: translateY(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 60px 20px 80px;
+            position: relative;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: var(--neon-green);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 30px rgba(31, 169, 115, 0.8);
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { text-shadow: 0 0 30px rgba(31, 169, 115, 0.8); }
+            50% { text-shadow: 0 0 50px rgba(31, 169, 115, 1), 0 0 80px rgba(194, 251, 225, 0.6); }
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: var(--mint-glow);
+            max-width: 700px;
+            margin: 0 auto 40px;
+            opacity: 0.95;
+        }
+
+        /* Card Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .card {
+            background: rgba(15, 62, 46, 0.4);
+            border: 1px solid rgba(31, 169, 115, 0.3);
+            border-radius: 16px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 40px rgba(31, 169, 115, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--neon-green);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 60px rgba(31, 169, 115, 0.2);
+        }
+
+        .card h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-green);
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .card p {
+            color: var(--mint-glow);
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+        }
+
+        /* Mono Box */
+        .mono-box {
+            background: rgba(10, 30, 23, 0.8);
+            border: 1px solid var(--neon-green);
+            border-radius: 8px;
+            padding: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: var(--mint-glow);
+            word-break: break-all;
+            margin: 10px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mono-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(31, 169, 115, 0.2), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid rgba(31, 169, 115, 0.3);
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            background: rgba(15, 62, 46, 0.3);
+            border: 1px solid rgba(31, 169, 115, 0.3);
+            border-bottom: none;
+            border-radius: 8px 8px 0 0;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            color: var(--mint-glow);
+            transition: all 0.3s ease;
+        }
+
+        .tab:hover {
+            background: rgba(31, 169, 115, 0.2);
+        }
+
+        .tab.active {
+            background: var(--neon-green);
+            color: var(--dark-bg);
+            border-color: var(--neon-green);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Form Elements */
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            background: rgba(15, 62, 46, 0.3);
+            border: 1px solid rgba(31, 169, 115, 0.3);
+            border-radius: 8px;
+            color: var(--white);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1rem;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--neon-green);
+            box-shadow: 0 0 15px rgba(31, 169, 115, 0.3);
+        }
+
+        textarea {
+            min-height: 100px;
+            font-family: 'Courier New', monospace;
+        }
+
+        label {
+            display: block;
+            color: var(--mint-glow);
+            font-weight: 600;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        /* Buttons */
+        button {
+            background: linear-gradient(135deg, var(--neon-green), var(--deep-green));
+            color: var(--white);
+            border: 1px solid var(--neon-green);
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            margin-top: 15px;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(31, 169, 115, 0.3);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(31, 169, 115, 0.5);
+        }
+
+        /* Chip */
+        .chip {
+            display: inline-block;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, var(--neon-green), var(--deep-green));
+            border: 1px solid var(--neon-green);
+            border-radius: 20px;
+            color: var(--white);
+            font-weight: 600;
+            margin: 10px 5px;
+        }
+
+        /* Icons */
+        .icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        /* Section Divider */
+        .section-divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--neon-green), transparent);
+            margin: 60px 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .grid { grid-template-columns: 1fr; }
+            .tabs { flex-direction: column; }
+        }
+
+        /* Particles */
+        .particle {
+            position: fixed;
+            width: 3px;
+            height: 3px;
+            background: var(--neon-green);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float 15s infinite;
+            opacity: 0.6;
+            box-shadow: 0 0 8px var(--neon-green);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-100px) translateX(50px); opacity: 0; }
+        }
+
+        .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 30%; animation-delay: 2s; animation-duration: 12s; }
+        .particle:nth-child(3) { left: 50%; animation-delay: 4s; animation-duration: 18s; }
+        .particle:nth-child(4) { left: 70%; animation-delay: 1s; animation-duration: 14s; }
+        .particle:nth-child(5) { left: 90%; animation-delay: 3s; animation-duration: 16s; }
+    </style>
+</head>
+<body>
+    <!-- Floating Particles -->
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1>PixelGenesis</h1>
+            <p class="subtitle">Decentralized Identity MVP — A privacy-first Mini DApp built with Zero-Knowledge concepts on Midnight</p>
+        </div>
+
+        <!-- Main Cards Grid -->
+        <div class="grid">
+            <!-- Create DID Card -->
+            <div class="card">
+                <span class="icon">🔐</span>
+                <h2>Create DID</h2>
+                <p>Generate your decentralized identifier with cryptographic keys</p>
+                <div class="mono-box">did:pg:a8f4e9c2b7d1f6a3e8c5b2d9</div>
+                <div class="mono-box">Public: 04a8f4e9c2b7d1f6a3e8c5...</div>
+                <div class="mono-box" style="border-color: #ef4444;">Private: c3b5d8e1f4a7c0d3e6f9...</div>
+                <button>Generate New DID</button>
+            </div>
+
+            <!-- Login Card -->
+            <div class="card">
+                <span class="icon">🔑</span>
+                <h2>Login with Private Key</h2>
+                <p>Zero-knowledge proof authentication system</p>
+                <label>Enter DID</label>
+                <input type="text" placeholder="did:pg:..." value="did:pg:example123">
+                <label>Private Key</label>
+                <input type="password" placeholder="Your private key">
+                <button>Authenticate</button>
+            </div>
+
+            <!-- User Profile Card -->
+            <div class="card">
+                <span class="icon">📝</span>
+                <h2>User Profile</h2>
+                <p>Encrypted identity with Aadhaar hash (SHA-256)</p>
+                <label>Name</label>
+                <input type="text" value="John Doe">
+                <label>Date of Birth</label>
+                <input type="date" value="1990-05-15">
+                <label>Gender</label>
+                <select>
+                    <option>Male</option>
+                    <option>Female</option>
+                    <option>Other</option>
+                </select>
+                <label>Aadhaar Hash</label>
+                <div class="mono-box">a8f4e9c2b7d1f6a3e8c5b2d9f1a4e7c3b5d8e1f4a7</div>
+                <button>Save Profile</button>
+            </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- Token Generation Section -->
+        <div class="card" style="max-width: 100%;">
+            <span class="icon">🎫</span>
+            <h2>Token Generation</h2>
+            <p>Create privacy-preserving access tokens with zero-knowledge proofs</p>
+
+            <div class="tabs">
+                <div class="tab active" onclick="switchTab(0)">Mode A: Selective Disclosure</div>
+                <div class="tab" onclick="switchTab(1)">Mode B: Predicate Proof</div>
+                <div class="tab" onclick="switchTab(2)">Mode C: File Upload</div>
+            </div>
+
+            <div class="tab-content active">
+                <label>Select Attribute to Share</label>
+                <select>
+                    <option>Name</option>
+                    <option>Date of Birth</option>
+                    <option>Gender</option>
+                    <option>Aadhaar Hash</option>
+                </select>
+                <p style="color: var(--mint-glow); margin-top: 10px;">📌 Only the selected attribute will be disclosed</p>
+                <div style="text-align: center; margin: 20px 0;">
+                    <span class="chip">Selected: Name</span>
+                </div>
+                <button>Generate Token</button>
+            </div>
+
+            <div class="tab-content">
+                <label>Field</label>
+                <input type="text" value="age">
+                <label>Condition</label>
+                <select>
+                    <option>Greater Than (&gt;)</option>
+                    <option>Greater or Equal (≥)</option>
+                    <option>Equal (=)</option>
+                    <option>Contains (∈)</option>
+                </select>
+                <label>Value</label>
+                <input type="text" value="18">
+                <div style="background: rgba(31, 169, 115, 0.15); border: 1px dashed var(--neon-green); border-radius: 10px; padding: 15px; margin: 20px 0; text-align: center;">
+                    <p style="color: var(--mint-glow); margin-bottom: 8px;">🔐 Zero-Knowledge Predicate</p>
+                    <div class="mono-box">Prove: age > 18 → TRUE/FALSE</div>
+                    <p style="color: var(--white); font-size: 0.9rem; margin-top: 8px;">Verify statements without revealing raw data</p>
+                </div>
+                <button>Generate Predicate Token</button>
+            </div>
+
+            <div class="tab-content">
+                <label>Upload File</label>
+                <input type="file">
+                <div style="margin: 20px 0; padding: 15px; background: rgba(15, 62, 46, 0.3); border: 1px solid rgba(31, 169, 115, 0.3); border-radius: 10px;">
+                    <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                        <input type="checkbox" style="width: auto; margin-right: 10px;">
+                        <span>🔐 Encrypt with AES-256 + Shamir Secret Sharing (2-of-3)</span>
+                    </label>
+                </div>
+                <p style="color: var(--mint-glow); font-size: 0.95rem;">File will be encrypted before upload. Decryption requires 2 out of 3 secret shards.</p>
+                <button>Upload & Generate Token</button>
+            </div>
+
+            <label style="margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(31, 169, 115, 0.3);">Token Expiry (seconds)</label>
+            <input type="number" value="300" placeholder="300">
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- Shamir Secret Recovery -->
+        <div class="card" style="max-width: 100%;">
+            <span class="icon">🧩</span>
+            <h2>Shamir Secret Recovery</h2>
+            <p>Reconstruct encryption key from secret shards (2-of-3 required)</p>
+
+            <div style="display: flex; justify-content: center; align-items: center; gap: 15px; margin: 30px 0; flex-wrap: wrap;">
+                <div style="width: 90px; height: 90px; background: rgba(31, 169, 115, 0.15); border-radius: 50%; border: 2px dashed var(--neon-green); display: flex; align-items: center; justify-content: center; font-size: 2rem;">🔑</div>
+                <div style="font-size: 1.5rem; color: var(--mint-glow);">+</div>
+                <div style="width: 90px; height: 90px; background: rgba(31, 169, 115, 0.15); border-radius: 50%; border: 2px dashed var(--neon-green); display: flex; align-items: center; justify-content: center; font-size: 2rem;">🔑</div>
+                <div style="font-size: 1.5rem; color: var(--mint-glow);">=</div>
+                <div style="width: 90px; height: 90px; background: rgba(31, 169, 115, 0.25); border-radius: 50%; border: 2px solid var(--mint-glow); display: flex; align-items: center; justify-content: center; font-size: 2rem; box-shadow: 0 0 25px rgba(31, 169, 115, 0.5);">🔓</div>
+            </div>
+
+            <label>Paste Secret Shares (one per line)</label>
+            <textarea placeholder="SHARE-1:a8f4e9c2b7d1f6a3&#10;SHARE-2:b5d8e1f4a7c0d3e6">SHARE-1:a8f4e9c2b7d1f6a3e8c5b2d9
+SHARE-2:b5d8e1f4a7c0d3e6f9b2c5d8</textarea>
+            <button>Recover Encryption Key</button>
+
+            <div style="margin-top: 20px; display: none;" id="recoveredKey">
+                <label>Recovered AES-256 Key</label>
+                <div class="mono-box">c3b5d8e1f4a7c0d3e6f9b2c5d8e1f4a7a8f4e9c2b7d1f6a3e8c5b2d9f1a4e7</div>
+            </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- VC Signing -->
+        <div class="card" style="max-width: 100%;">
+            <span class="icon">✍️</span>
+            <h2>Sign Verifiable Credential</h2>
+            <p>Cryptographically sign JSON credentials with your DID</p>
+
+            <label>DID</label>
+            <input type="text" value="did:pg:a8f4e9c2b7d1f6a3e8c5b2d9">
+
+            <label>Verifiable Credential (JSON)</label>
+            <textarea>{
+  "@context": ["https://www.w3.org/2018/credentials/v1"],
+  "type": ["VerifiableCredential"],
+  "issuer": "did:pg:example",
+  "issuanceDate": "2025-11-29",
+  "credentialSubject": {
+    "id": "did:pg:subject",
+    "claim": "Age over 18"
+  }
+}</textarea>
+            <button>Sign Credential</button>
+
+            <div style="margin-top: 20px;">
+                <label>Digital Signature</label>
+                <div class="mono-box">a8f4e9c2b7d1f6a3e8c5b2d9f1a4e7c3b5d8e1f4a7c0d3e6f9b2c5d8e1f4a7c3</div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div style="text-align: center; margin-top: 60px; padding: 30px; color: var(--mint-glow); opacity: 0.7;">
+            <p>Built for Midnight Blockchain Track 3: Privacy Mini DApps</p>
+            <p style="font-size: 0.9rem; margin-top: 5px;">Zero-knowledge • Privacy-first • Futuristic UI</p>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching
+        function switchTab(index) {
+            const tabs = document.querySelectorAll('.tab');
+            const contents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach((tab, i) => {
+                if (i === index) {
+                    tab.classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+
+            contents.forEach((content, i) => {
+                if (i === index) {
+                    content.classList.add('active');
+                } else {
+                    content.classList.remove('active');
+                }
+            });
+        }
+
+        // Show recovered key on button click (demo)
+        document.addEventListener('DOMContentLoaded', function() {
+            const recoverBtn = document.querySelector('.card button[onclick*="Recover"]');
+            if (recoverBtn) {
+                recoverBtn.addEventListener('click', function() {
+                    document.getElementById('recoveredKey').style.display = 'block';
+                });
+            }
+        });
+    </script>
+</body>
+</html>
