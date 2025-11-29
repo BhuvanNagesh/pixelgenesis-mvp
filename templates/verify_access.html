@@ -1,102 +1,95 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Verify Access Token</title>
-  <link rel="stylesheet" href="/static/style.css">
-
-  <style>
-      .json-box {
-          background: #1e1e1e;
-          color: #d4d4d4;
-          padding: 15px;
-          border-radius: 10px;
-          margin-top: 20px;
-          font-family: Consolas, monospace;
-          white-space: pre-wrap;
-          font-size: 14px;
-      }
-
-      .success-box {
-          background: #e9ffe9;
-          border: 1px solid #7ed957;
-          padding: 12px;
-          border-radius: 8px;
-          color: #1b7e26;
-          margin-bottom: 20px;
-          font-weight: bold;
-      }
-
-      .error-box {
-          background: #ffecec;
-          border: 1px solid #ff7070;
-          padding: 12px;
-          border-radius: 8px;
-          color: #b30000;
-          margin-bottom: 20px;
-          font-weight: bold;
-      }
-
-      .info-card {
-          background: #f7faff;
-          padding: 15px;
-          border-radius: 10px;
-          border: 1px solid #d0e3ff;
-          margin-top: 15px;
-      }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Token — PixelGenesis</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
+    <div class="particles">
+        <div class="particle" style="left: 14%;"></div>
+        <div class="particle" style="left: 32%;"></div>
+        <div class="particle" style="left: 52%;"></div>
+        <div class="particle" style="left: 72%;"></div>
+        <div class="particle" style="left: 92%;"></div>
+    </div>
 
-<div class="container">
+    <div class="container">
+        <h2>✅ Verify Access Token</h2>
+        <p class="subtitle">Zero-knowledge token verification system</p>
 
-<h2>🔍 Verify Token</h2>
+        {% if error %}
+            <div class="error">✗ {{ error }}</div>
+            <div style="text-align: center; margin: 30px 0;">
+                <div style="width: 100px; height: 100px; margin: 0 auto; background: rgba(239, 68, 68, 0.1); border-radius: 50%; border: 2px solid #ef4444; display: flex; align-items: center; justify-content: center; font-size: 3rem; animation: shieldGlow 2s ease-in-out infinite;">
+                    ⚠️
+                </div>
+            </div>
+        {% endif %}
 
-<form method="POST">
+        {% if success %}
+            <div class="success">✓ Token Verified Successfully</div>
 
-    <label>Enter Token:</label>
-    <input type="text" name="token" placeholder="paste token here" style="width:100%;" required>
+            <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+                <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+            </svg>
 
-    <button type="submit">Verify</button>
-</form>
+            <div style="margin-top: 30px;">
+                <label>Field / Type</label>
+                <div class="mono-box">{{ field }}</div>
+            </div>
 
-<br>
+            <div style="margin-top: 20px;">
+                <label>Value / Result</label>
+                <div class="mono-box">{{ value }}</div>
+            </div>
 
-{% if error %}
-  <div class="error-box">{{ error }}</div>
-{% endif %}
+            {% if file_url %}
+                <div style="margin-top: 20px;">
+                    <label>File URL</label>
+                    <div class="mono-box">
+                        <a href="{{ file_url }}" target="_blank" style="color: var(--neon-green);">{{ file_url }}</a>
+                    </div>
+                </div>
 
-{% if success %}
-  <div class="success-box">Token is valid ✔</div>
-{% endif %}
+                {% if structured.encrypted %}
+                    <div style="margin-top: 30px; padding: 20px; background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; border-radius: 12px;">
+                        <p style="color: #fca5a5; font-size: 1.05rem;">
+                            🔐 This file is encrypted with AES-256. Decryption requires ANY 2 Shamir secret shares.
+                        </p>
+                        <a href="/shamir/recover" class="btn" style="margin-top: 16px; background: rgba(239, 68, 68, 0.3); border-color: #ef4444;"><span>→ Recover Encryption Key</span></a>
+                    </div>
+                {% endif %}
+            {% endif %}
+        {% endif %}
 
-{% if structured %}
-  <div class="info-card">
-      <h3>📦 Structured Response (Algorithm #9)</h3>
-      <div class="json-box">
-          {{ structured | tojson(indent=2) }}
-      </div>
-  </div>
-{% endif %}
+        {% if structured %}
+            <div style="margin-top: 40px; padding: 24px; background: rgba(15, 62, 46, 0.2); border: 1px solid var(--glass-border); border-radius: 12px;">
+                <h3 style="color: var(--neon-green); margin-bottom: 16px;">📦 Structured Response</h3>
+                <div class="mono-box" style="font-size: 0.85rem;">{{ structured | tojson(indent=2) }}</div>
+            </div>
+        {% endif %}
 
-{% if file_url %}
-  <div class="info-card">
-      <b>File CID:</b> {{ value }}<br>
-      <b>File URL:</b> <a href="{{ file_url }}" target="_blank">{{ file_url }}</a><br>
+        {% if not success and not error %}
+            <form method="POST">
+                <label for="token">Enter Access Token</label>
+                <input type="text" name="token" id="token" placeholder="Paste token here" required>
 
-      {% if structured.encrypted %}
-        <p style="color:#c62828; margin-top:10px;">
-          🔐 This file is AES-256 encrypted.<br>
-          Decryption requires **any 2 Shamir shares**.
-        </p>
-        <a class="btn" href="/shamir/recover">Recover Encryption Key</a>
-      {% endif %}
-  </div>
-{% endif %}
+                <div style="text-align: center; margin: 40px 0;">
+                    <div class="shield-icon" style="width: 100px; height: 100px; margin: 0 auto; background: rgba(31, 169, 115, 0.1); border-radius: 50%; border: 2px solid var(--neon-green); display: flex; align-items: center; justify-content: center; font-size: 3rem;">
+                        🛡️
+                    </div>
+                </div>
 
-<br>
-<a href="/">Home</a>
-
-</div>
-
+                <button type="submit"><span>🔍 Verify Token</span></button>
+                <a href="/" class="btn" style="background: rgba(15, 62, 46, 0.5); border-color: rgba(31, 169, 115, 0.5);"><span>← Back to Home</span></a>
+            </form>
+        {% else %}
+            <a href="/verify_access" class="btn" style="margin-top: 30px;"><span>← Verify Another Token</span></a>
+            <a href="/" class="btn" style="background: rgba(15, 62, 46, 0.5); border-color: rgba(31, 169, 115, 0.5);"><span>← Back to Home</span></a>
+        {% endif %}
+    </div>
 </body>
 </html>

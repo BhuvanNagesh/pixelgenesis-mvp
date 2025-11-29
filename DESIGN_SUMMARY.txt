@@ -1,0 +1,155 @@
+═══════════════════════════════════════════════════════════════
+    PIXELGENESIS — DECENTRALIZED PRIVACY IDENTITY DAPP
+    Midnight Blockchain Track 3: Privacy Mini DApps
+═══════════════════════════════════════════════════════════════
+
+🎨 DESIGN THEME: Cyber-Green Futuristic
+
+COLOR PALETTE:
+  • #0A1E17 — Dark Background
+  • #0F3E2E — Deep Green
+  • #1FA973 — Neon Green Accent
+  • #C2FBE1 — Mint Glow
+  • #FFFFFF — Text
+
+🌟 KEY DESIGN FEATURES:
+  ✓ Glassmorphism cards with backdrop blur
+  ✓ Animated scanning lines across viewport
+  ✓ Floating particle effects
+  ✓ Neon green glowing borders with pulse animations
+  ✓ Smooth 250-400ms transitions
+  ✓ Ripple effects and hover glows
+  ✓ Animated checkmarks for success states
+  ✓ Futuristic typography (Orbitron + Rajdhani)
+  ✓ Fully responsive design (mobile → desktop)
+  ✓ Zero-knowledge themed graphics
+
+📄 PAGES CREATED (9 Total):
+
+1. 🏠 HOME / LANDING PAGE
+   • Animated hero section with floating particles
+   • Neon-glowing title "PixelGenesis"
+   • Interactive navigation cards with hover effects
+   • 8 navigation options with smooth transitions
+
+2. 🔐 CREATE DID PAGE
+   • Circular ripple effect animation
+   • Generate DID, Public Key, Private Key
+   • Glowing mono boxes for key display
+   • Copy-to-clipboard buttons with animations
+   • Warning message for private key security
+
+3. 🔑 LOGIN PAGE
+   • Three-step authentication flow
+   • Animated shield icon with glow effect
+   • Challenge-response authentication
+   • Laser scan animation on input focus
+   • Success state with animated checkmark
+
+4. 📝 USER PROFILE PAGE
+   • Clean form layout with cyber-green inputs
+   • SHA-256 hash visualization
+   • Dashed circular icon animations
+   • Privacy-focused messaging
+
+5. ✅ PROFILE SUCCESS PAGE
+   • Animated checkmark SVG
+   • Glowing hash display boxes
+   • Copy hash functionality
+   • Clear next-step CTAs
+
+6. 🎫 TOKEN GENERATION PAGE (3 Modes with Tabs)
+   
+   MODE A — Selective Disclosure
+   • Dropdown attribute selector
+   • Animated chip showing selected attribute
+   • Privacy explanation text
+   
+   MODE B — Predicate Proof
+   • Condition builder interface
+   • Zero-knowledge proof visualization
+   • Live predicate display (age > 18)
+   
+   MODE C — File Upload + Encryption
+   • Glowing dashed border upload box
+   • AES-256 encryption toggle
+   • Shamir 2-of-3 visualization
+   • File encryption animation
+
+7. ✓ TOKEN SUCCESS PAGE
+   • Animated checkmark
+   • Token display in glowing container
+   • Copy token button
+   • Shamir secret shares display (if encrypted)
+   • Visual shard separation with styling
+
+8. 🔍 TOKEN VERIFICATION PAGE
+   • Shield icon animation
+   • Valid/Invalid state animations
+   • Cracking animation for expired tokens
+   • Structured JSON response display
+   • File decryption instructions
+
+9. 📊 TOKEN MANAGEMENT DASHBOARD
+   • Full-width data table (max-width: 1200px)
+   • Color-coded badges (VALUE/PREDICATE/FILE)
+   • Gradient mode indicators
+   • Live status display (Active/Revoked/Expired)
+   • Inline revoke buttons
+
+10. 🧩 SHAMIR SECRET RECOVERY PAGE
+    • 3-shard visual representation
+    • Merge animation (2 keys = unlock)
+    • Textarea for share input
+    • Recovered key display
+    • Copy encryption key button
+
+11. ✍️ VERIFIABLE CREDENTIAL SIGNING
+    • JSON editor with syntax highlighting
+    • DID input with validation
+    • Signature display in mono box
+    • Public key export for verification
+    • Lock animation on sign
+
+═══════════════════════════════════════════════════════════════
+
+🎭 ANIMATIONS & MICRO-INTERACTIONS:
+
+  • Background pulse (8s loop)
+  • Scanning line animation (4s vertical sweep)
+  • Container glow (3s pulse)
+  • Text glow (2s heartbeat)
+  • Border pulse (2s color shift)
+  • Shimmer effect (3s horizontal sweep)
+  • Floating particles (12-18s rise)
+  • Button ripple on hover
+  • Shield glow animation
+  • Checkmark stroke animation
+  • Input laser scan on focus
+  • Tab switch fade-in
+  • Card hover lift (translateY -2px)
+
+═══════════════════════════════════════════════════════════════
+
+💎 PREMIUM POLISH:
+
+  • Smooth easing functions
+  • Layered box shadows for depth
+  • Inset glows on focused inputs
+  • Magnetic button interactions
+  • Professional contrast ratios
+  • Consistent 8px spacing system
+  • Semantic HTML5 structure
+  • Accessible form labels
+  • Mobile-first responsive breakpoints
+
+═══════════════════════════════════════════════════════════════
+
+🚀 READY FOR DEMO & HACKATHON JUDGING
+
+All pages fully functional and integrated with Flask backend.
+No additional dependencies required.
+Pure CSS animations (no JavaScript libraries).
+Professional, polished, production-ready UI.
+
+═══════════════════════════════════════════════════════════════

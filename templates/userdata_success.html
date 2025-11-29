@@ -1,31 +1,68 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>User Data Stored</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Saved — PixelGenesis</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-
-<div class="container">
-
-    <div class="success">✅ User Profile Saved Successfully!</div>
-
-    <p><b>Name:</b> {{ name }}</p>
-    <p><b>Date of Birth:</b> {{ dob }}</p>
-    <p><b>Gender:</b> {{ gender }}</p>
-
-    <div class="hash-box">
-        <h3>🔐 Aadhaar SHA-256 Hash:</h3>
-        <p class="mono">{{ aadhaar_hash }}</p>
-        <small>This hashed Aadhaar is used for privacy-preserving verifications.</small>
+    <div class="particles">
+        <div class="particle" style="left: 10%;"></div>
+        <div class="particle" style="left: 30%;"></div>
+        <div class="particle" style="left: 50%;"></div>
+        <div class="particle" style="left: 70%;"></div>
+        <div class="particle" style="left: 90%;"></div>
     </div>
 
-    <br>
+    <div class="container">
+        <h2>✓ Profile Successfully Saved</h2>
+        <p class="subtitle">Your data is encrypted and secured with zero-knowledge principles</p>
 
-    <a class="btn" href="/">Go Home</a>
-    <a class="btn" href="/access_request">Generate Token</a>
+        <div class="success">
+            Profile data encrypted and stored successfully
+        </div>
 
-</div>
+        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+            <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+            <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+        </svg>
 
+        <div style="margin-top: 30px;">
+            <label>Name</label>
+            <div class="mono-box">{{ name }}</div>
+        </div>
+
+        <div style="margin-top: 20px;">
+            <label>Date of Birth</label>
+            <div class="mono-box">{{ dob }}</div>
+        </div>
+
+        <div style="margin-top: 20px;">
+            <label>Gender</label>
+            <div class="mono-box">{{ gender }}</div>
+        </div>
+
+        <div style="margin-top: 20px;">
+            <label>Aadhaar Hash (SHA-256)</label>
+            <div class="mono-box" id="hash-box">{{ aadhaar_hash }}</div>
+            <button class="copy-btn" onclick="copyHash()"><span>📋 Copy Hash</span></button>
+            <p style="color: var(--mint-glow); margin-top: 12px; font-size: 0.95rem;">
+                ✓ Original Aadhaar number was hashed and discarded. Only the cryptographic hash is retained.
+            </p>
+        </div>
+
+        <a href="/access_request" class="btn" style="margin-top: 40px;"><span>→ Generate Token</span></a>
+        <a href="/" class="btn" style="background: rgba(15, 62, 46, 0.5); border-color: rgba(31, 169, 115, 0.5);"><span>← Back to Home</span></a>
+    </div>
+
+    <script>
+        function copyHash() {
+            const text = document.getElementById('hash-box').innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('✓ Hash copied to clipboard!');
+            });
+        }
+    </script>
 </body>
 </html>

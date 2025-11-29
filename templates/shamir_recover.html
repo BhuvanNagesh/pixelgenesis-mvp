@@ -1,94 +1,100 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>🔑 Recover AES Key (Shamir Secret Sharing)</title>
-  <link rel="stylesheet" href="/static/style.css">
-  <style>
-    .box {
-        background: #ffffff;
-        padding: 20px;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        margin-top: 20px;
-    }
-    textarea {
-        width: 100%;
-        height: 150px;
-        padding: 10px;
-        border-radius: 8px;
-        border: 1px solid #bbb;
-        font-family: monospace;
-        font-size: 14px;
-    }
-    .result-box {
-        background: #f7faff;
-        padding: 10px;
-        border-left: 5px solid #1e88e5;
-        margin-top: 15px;
-        font-family: monospace;
-        word-break: break-all;
-    }
-    .error-box {
-        background: #ffecec;
-        border-left: 5px solid #d32f2f;
-        padding: 10px;
-        margin-top: 15px;
-        font-weight: 600;
-        color: #c62828;
-    }
-    .btn {
-        margin-top: 15px;
-        padding: 10px 16px;
-        background: #1e88e5;
-        border-radius: 8px;
-        color: white;
-        border: none;
-        font-weight: bold;
-        cursor: pointer;
-        font-size: 15px;
-    }
-    .btn:hover {
-        background: #1565c0;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shamir Recovery — PixelGenesis</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-
-<div class="container">
-
-<h2>🔐 Shamir Secret Recovery Tool</h2>
-<p class="small">Enter any <b>2 out of the 3 shares</b> generated from encrypted file upload.</p>
-
-<div class="box">
-
-  {% if error %}
-    <div class="error-box">❌ {{ error }}</div>
-  {% endif %}
-
-  {% if recovered %}
-    <div class="success">✔ Key successfully recovered!</div>
-    <div class="result-box">
-        <b>AES-256 Key (HEX):</b><br>
-        {{ secret_hex }}
+    <div class="particles">
+        <div class="particle" style="left: 9%;"></div>
+        <div class="particle" style="left: 27%;"></div>
+        <div class="particle" style="left: 46%;"></div>
+        <div class="particle" style="left: 64%;"></div>
+        <div class="particle" style="left: 83%;"></div>
     </div>
-  {% endif %}
 
-  <form method="POST">
-    <label><b>Paste Shares (each share on a new line):</b></label><br>
-    <textarea name="shares" placeholder="Example:
-1-abc123....
-2-def456....
-"></textarea>
+    <div class="container">
+        <h2>🧩 Shamir Secret Recovery</h2>
+        <p class="subtitle">Reconstruct encryption key from secret shards</p>
 
-    <button type="submit" class="btn">Recover Key</button>
-  </form>
+        {% if error %}
+            <div class="error">✗ {{ error }}</div>
+        {% endif %}
 
-</div>
+        {% if recovered %}
+            <div class="success">✓ Encryption Key Successfully Recovered</div>
 
-<br>
-<a href="/" class="btn">Home</a>
+            <div style="text-align: center; margin: 30px 0;">
+                <div style="display: flex; justify-content: center; align-items: center; gap: 20px;">
+                    <div style="width: 80px; height: 80px; background: rgba(31, 169, 115, 0.2); border-radius: 50%; border: 2px solid var(--neon-green); display: flex; align-items: center; justify-content: center; font-size: 2rem; animation: shieldGlow 2s ease-in-out infinite;">
+                        🔑
+                    </div>
+                    <div style="font-size: 2rem; color: var(--mint-glow);">+</div>
+                    <div style="width: 80px; height: 80px; background: rgba(31, 169, 115, 0.2); border-radius: 50%; border: 2px solid var(--neon-green); display: flex; align-items: center; justify-content: center; font-size: 2rem; animation: shieldGlow 2s ease-in-out infinite; animation-delay: 0.5s;">
+                        🔑
+                    </div>
+                    <div style="font-size: 2rem; color: var(--mint-glow);">=</div>
+                    <div style="width: 80px; height: 80px; background: rgba(31, 169, 115, 0.3); border-radius: 50%; border: 2px solid var(--mint-glow); display: flex; align-items: center; justify-content: center; font-size: 2rem; box-shadow: 0 0 30px rgba(31, 169, 115, 0.6);">
+                        🔓
+                    </div>
+                </div>
+            </div>
 
-</div>
+            <div style="margin-top: 30px;">
+                <label>AES-256 Encryption Key (Hex)</label>
+                <div class="mono-box" id="key-box">{{ secret_hex }}</div>
+                <button class="copy-btn" onclick="copyKey()"><span>📋 Copy Key</span></button>
+                <p style="color: var(--mint-glow); margin-top: 12px; font-size: 0.95rem;">
+                    ✓ Use this key to decrypt your encrypted file
+                </p>
+            </div>
 
+            <a href="/" class="btn" style="margin-top: 40px;"><span>← Back to Home</span></a>
+
+        {% else %}
+            <form method="POST">
+                <p style="margin-bottom: 20px; font-size: 1.05rem; color: var(--mint-glow);">
+                    Enter ANY 2 of the 3 Shamir secret shares (one per line) to recover the encryption key.
+                </p>
+
+                <div style="text-align: center; margin: 30px 0;">
+                    <div style="display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap;">
+                        <div style="width: 100px; height: 100px; background: rgba(31, 169, 115, 0.1); border-radius: 50%; border: 2px dashed var(--neon-green); display: flex; align-items: center; justify-content: center; font-size: 2.5rem;">
+                            🔑
+                        </div>
+                        <div style="width: 100px; height: 100px; background: rgba(31, 169, 115, 0.1); border-radius: 50%; border: 2px dashed var(--neon-green); display: flex; align-items: center; justify-content: center; font-size: 2.5rem;">
+                            🔑
+                        </div>
+                        <div style="width: 100px; height: 100px; background: rgba(31, 169, 115, 0.05); border-radius: 50%; border: 2px dashed rgba(31, 169, 115, 0.3); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; opacity: 0.3;">
+                            🔑
+                        </div>
+                    </div>
+                    <p style="color: var(--mint-glow); margin-top: 16px; font-size: 0.95rem;">
+                        2 out of 3 shares required for recovery
+                    </p>
+                </div>
+
+                <label for="shares">Paste Secret Shares</label>
+                <textarea name="shares" id="shares" placeholder="SHARE-1:abc123...&#10;SHARE-2:def456..."></textarea>
+                <p style="color: var(--mint-glow); margin-top: 8px; font-size: 0.9rem;">
+                    Each share should be on a new line
+                </p>
+
+                <button type="submit"><span>🔓 Recover Key</span></button>
+                <a href="/" class="btn" style="background: rgba(15, 62, 46, 0.5); border-color: rgba(31, 169, 115, 0.5);"><span>← Back to Home</span></a>
+            </form>
+        {% endif %}
+    </div>
+
+    <script>
+        function copyKey() {
+            const text = document.getElementById('key-box').innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('✓ Encryption key copied to clipboard!');
+            });
+        }
+    </script>
 </body>
 </html>

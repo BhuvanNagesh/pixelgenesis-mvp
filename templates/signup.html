@@ -1,45 +1,77 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Create DID</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create DID — PixelGenesis</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
+    <div class="particles">
+        <div class="particle" style="left: 10%;"></div>
+        <div class="particle" style="left: 30%;"></div>
+        <div class="particle" style="left: 50%;"></div>
+        <div class="particle" style="left: 70%;"></div>
+        <div class="particle" style="left: 90%;"></div>
+    </div>
 
-<div class="container">
+    <div class="container">
+        <h2>🔐 Create Decentralized Identity</h2>
+        <p class="subtitle">Generate your private DID with zero-knowledge cryptography</p>
 
-    <h2>🆔 Create Decentralized ID (DID)</h2>
+        {% if registered %}
+            <div class="success">
+                ✓ DID Successfully Generated
+            </div>
 
-    {% if registered %}
-        <div class="success">🎉 DID Created Successfully!</div>
+            <div class="ripple" style="width: 120px; height: 120px; margin: 30px auto; background: rgba(31, 169, 115, 0.2); border-radius: 50%; border: 2px solid var(--neon-green);"></div>
 
-        <p><b>Your DID:</b></p>
-        <div class="code-box">{{ did }}</div>
+            <div style="margin-top: 30px;">
+                <label>Decentralized Identifier (DID)</label>
+                <div class="mono-box" id="did-box">{{ did }}</div>
+                <button class="copy-btn" onclick="copyText('did-box')"><span>📋 Copy DID</span></button>
+            </div>
 
-        <p><b>Your Public Key:</b></p>
-        <div class="code-box">{{ public_key }}</div>
+            <div style="margin-top: 30px;">
+                <label>Public Key</label>
+                <div class="mono-box" id="pub-box">{{ public_key }}</div>
+                <button class="copy-btn" onclick="copyText('pub-box')"><span>📋 Copy Public Key</span></button>
+            </div>
 
-        <p><b>Your Private Key (Store Safely!):</b></p>
-        <div class="code-box warn">{{ private_key }}</div>
+            <div style="margin-top: 30px;">
+                <label>Private Key</label>
+                <div class="mono-box" id="priv-box" style="border-color: #ef4444; box-shadow: inset 0 0 20px rgba(239, 68, 68, 0.1), 0 0 30px rgba(239, 68, 68, 0.2);">{{ private_key }}</div>
+                <button class="copy-btn" onclick="copyText('priv-box')"><span>📋 Copy Private Key</span></button>
+                <p style="color: #fca5a5; margin-top: 12px; font-size: 0.95rem;">⚠️ Keep your private key secure. You'll need it to log in.</p>
+            </div>
 
-        <br>
-        <a class="btn" href="/login">Login with DID</a>
-        <a class="btn" href="/">Home</a>
+            <a href="/" class="btn" style="margin-top: 40px;"><span>← Back to Home</span></a>
 
-    {% else %}
+        {% else %}
+            <form method="POST">
+                <p style="margin-bottom: 30px; font-size: 1.1rem; color: var(--mint-glow);">
+                    Click the button below to generate your Decentralized Identity. Your keys will be created instantly using cryptographic algorithms.
+                </p>
 
-        <p>Click the button below to generate a new DID using Ed25519 keys.</p>
+                <div style="text-align: center; margin: 40px 0;">
+                    <div class="ripple" style="width: 150px; height: 150px; margin: 0 auto; background: rgba(31, 169, 115, 0.1); border-radius: 50%; border: 2px dashed var(--neon-green); display: flex; align-items: center; justify-content: center; font-size: 3rem;">
+                        🔑
+                    </div>
+                </div>
 
-        <form method="POST">
-            <button type="submit">Generate DID</button>
-        </form>
+                <button type="submit"><span>⚡ Generate DID</span></button>
+                <a href="/" class="btn" style="background: rgba(15, 62, 46, 0.5); border-color: rgba(31, 169, 115, 0.5);"><span>← Cancel</span></a>
+            </form>
+        {% endif %}
+    </div>
 
-        <br>
-        <a href="/">Home</a>
-
-    {% endif %}
-
-</div>
-
+    <script>
+        function copyText(elementId) {
+            const text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('✓ Copied to clipboard!');
+            });
+        }
+    </script>
 </body>
 </html>

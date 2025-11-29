@@ -1,198 +1,131 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Generate Access Token</title>
-  <link rel="stylesheet" href="/static/style.css">
-
-  <style>
-    body {
-      background: #fdfdfd;
-      color: #222;
-    }
-
-    h2 {
-      color: #0a2540;
-    }
-
-    .section-box {
-      background: #ffffff;
-      padding: 18px;
-      border-radius: 12px;
-      margin-bottom: 20px;
-      border: 1px solid #d1d5db; /* light grey */
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    }
-
-    .label-title {
-      font-weight: 600;
-      margin-bottom: 8px;
-      display: block;
-      color: #1f2937; /* dark grey */
-    }
-
-    select, input[type="text"], input[type="number"], input[type="file"] {
-      width: 100%;
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #cbd5e1; /* border grey */
-      margin-bottom: 10px;
-      font-size: 14px;
-      background: #fafafa;
-    }
-
-    select:focus, input:focus {
-      border-color: #3b82f6; /* blue focus */
-      outline: none;
-      background: #ffffff;
-    }
-
-    .encrypt-box {
-      background: #e7f2ff;
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid #93c5fd;
-      margin-top: 10px;
-    }
-
-    small {
-      color: #6b7280;
-      display: block;
-      margin-top: 5px;
-    }
-
-    /* BUTTON FIX */
-    .btn {
-      display: inline-block;
-      background: #2563eb;   /* blue */
-      color: white !important;
-      padding: 10px 18px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 600;
-      margin-right: 10px;
-      transition: 0.2s;
-    }
-
-    .btn:hover {
-      background: #1e40af;  /* dark blue */
-    }
-
-    button[type="submit"] {
-      background: #16a34a; /* green */
-      border: none;
-      color: white;
-      padding: 12px 22px;
-      border-radius: 8px;
-      font-size: 15px;
-      font-weight: bold;
-      cursor: pointer;
-      width: 100%;
-    }
-
-    button[type="submit"]:hover {
-      background: #0f7a36;
-    }
-
-    .container {
-      max-width: 600px;
-      margin: auto;
-      padding-top: 20px;
-    }
-  </style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Token — PixelGenesis</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-
-<div class="container">
-
-<h2>🎫 Generate Access Token</h2>
-
-{% if error %}
-  <div class="error">{{ error }}</div>
-{% endif %}
-
-<form method="POST" enctype="multipart/form-data">
-
-  <!-- MODE SELECTOR -->
-  <div class="section-box">
-    <label class="label-title">Select Mode:</label>
-    <select name="mode" id="mode_select" onchange="onModeChange()">
-      <option value="value">Mode A — Share Specific Field</option>
-      <option value="predicate">Mode B — Predicate Check</option>
-      <option value="file">Mode C — Upload File → IPFS (Encrypted Optional)</option>
-    </select>
-  </div>
-
-  <!-- MODE A: VALUE -->
-  <div id="value_block" class="section-box">
-    <label class="label-title">Select Field:</label>
-    <select name="field">
-      <option value="name">Name</option>
-      <option value="dob">Date of Birth</option>
-      <option value="gender">Gender</option>
-      <option value="aadhaar_hash">Aadhaar Hash</option>
-    </select>
-    <small>Only whitelisted fields can be shared.</small>
-  </div>
-
-  <!-- MODE B: PREDICATE -->
-  <div id="predicate_block" class="section-box" style="display:none;">
-    <label class="label-title">Predicate Field</label>
-    <input type="text" name="pred_field" placeholder="e.g. age, gender, dob">
-
-    <label class="label-title">Condition</label>
-    <select name="op">
-      <option value="gt">Greater than (gt)</option>
-      <option value="ge">Greater or equal (ge)</option>
-      <option value="eq">Equal (eq)</option>
-      <option value="in">Contains / In (in)</option>
-    </select>
-
-    <label class="label-title">Compare Value</label>
-    <input type="text" name="pred_value" placeholder="e.g. 18 / male / BLR">
-
-    <small>Example: age > 18 OR gender == male</small>
-  </div>
-
-  <!-- MODE C: FILE UPLOAD -->
-  <div id="file_block" class="section-box" style="display:none;">
-    <label class="label-title">Upload File:</label>
-    <input type="file" name="file">
-
-    <div class="encrypt-box">
-      <label>
-        <input type="checkbox" name="encrypt">
-        🔐 Encrypt file before upload (AES-256 + Shamir 2-of-3 Shares)
-      </label>
+    <div class="particles">
+        <div class="particle" style="left: 8%;"></div>
+        <div class="particle" style="left: 25%;"></div>
+        <div class="particle" style="left: 45%;"></div>
+        <div class="particle" style="left: 65%;"></div>
+        <div class="particle" style="left: 85%;"></div>
     </div>
 
-    <small>Your file is encrypted locally before upload.</small>
-  </div>
+    <div class="container" style="max-width: 750px;">
+        <h2>🎫 Generate Access Token</h2>
+        <p class="subtitle">Create privacy-preserving zero-knowledge tokens</p>
 
-  <!-- TTL -->
-  <div class="section-box">
-    <label class="label-title">TTL (Time To Live)</label>
-    <input type="number" name="ttl_seconds" placeholder="300">
-    <small>0 = never expires | blank = default 300s</small>
-  </div>
+        {% if error %}
+            <div class="error">✗ {{ error }}</div>
+        {% endif %}
 
-  <button type="submit">Generate Token</button>
+        <div class="tabs">
+            <div class="tab active" onclick="switchMode('value')">Mode A: Selective Disclosure</div>
+            <div class="tab" onclick="switchMode('predicate')">Mode B: Predicate Proof</div>
+            <div class="tab" onclick="switchMode('file')">Mode C: File Upload</div>
+        </div>
 
-</form>
+        <form method="POST" enctype="multipart/form-data" id="tokenForm">
+            <input type="hidden" name="mode" id="mode_input" value="value">
 
-<br>
-<a class="btn" href="/">Home</a>
+            <div id="value_block" class="tab-content active">
+                <label for="field">Select Attribute</label>
+                <select name="field" id="field">
+                    <option value="name">Name</option>
+                    <option value="dob">Date of Birth</option>
+                    <option value="gender">Gender</option>
+                    <option value="aadhaar_hash">Aadhaar Hash</option>
+                </select>
+                <p style="color: var(--mint-glow); margin-top: 12px; font-size: 0.95rem;">
+                    📌 Only the selected attribute will be shared. Other data remains private.
+                </p>
 
-</div>
+                <div style="text-align: center; margin: 30px 0;">
+                    <div class="chip" id="selected-chip">Attribute: Name</div>
+                </div>
+            </div>
 
-<script>
-function onModeChange(){
-  let m = document.getElementById("mode_select").value;
-  document.getElementById("value_block").style.display = (m==="value") ? "block" : "none";
-  document.getElementById("predicate_block").style.display = (m==="predicate") ? "block" : "none";
-  document.getElementById("file_block").style.display = (m==="file") ? "block" : "none";
-}
-</script>
+            <div id="predicate_block" class="tab-content">
+                <label for="pred_field">Field Name</label>
+                <input type="text" name="pred_field" id="pred_field" placeholder="e.g., age, gender" value="age">
 
+                <label for="op">Condition</label>
+                <select name="op" id="op">
+                    <option value="gt">Greater Than (&gt;)</option>
+                    <option value="ge">Greater or Equal (≥)</option>
+                    <option value="eq">Equal (=)</option>
+                    <option value="in">Contains (∈)</option>
+                </select>
+
+                <label for="pred_value">Comparison Value</label>
+                <input type="text" name="pred_value" id="pred_value" placeholder="e.g., 18, male, blr" value="18">
+
+                <div style="background: rgba(31, 169, 115, 0.15); border: 1px dashed var(--neon-green); border-radius: 10px; padding: 20px; margin-top: 30px; text-align: center;">
+                    <p style="font-size: 1.1rem; color: var(--mint-glow); margin-bottom: 10px;">
+                        🔐 Zero-Knowledge Predicate
+                    </p>
+                    <p style="color: var(--white); font-size: 0.95rem;">
+                        Verify statements without revealing raw data
+                    </p>
+                    <div style="margin-top: 15px; padding: 12px; background: rgba(10, 30, 23, 0.6); border-radius: 8px; font-family: 'Courier New', monospace; color: var(--neon-green);">
+                        Prove: age &gt; 18 → TRUE/FALSE
+                    </div>
+                </div>
+            </div>
+
+            <div id="file_block" class="tab-content">
+                <label for="file">Choose File</label>
+                <input type="file" name="file" id="file">
+
+                <div style="background: rgba(15, 62, 46, 0.3); border: 1px solid var(--glass-border); border-radius: 12px; padding: 20px; margin-top: 24px;">
+                    <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                        <input type="checkbox" name="encrypt" style="margin-right: 12px;">
+                        <span style="font-size: 1.1rem;">🔐 Encrypt file with AES-256 + Shamir Secret Sharing (2-of-3)</span>
+                    </label>
+                    <p style="color: var(--mint-glow); margin-top: 12px; font-size: 0.9rem; margin-left: 30px;">
+                        File will be encrypted before upload. Decryption requires 2 out of 3 secret shards.
+                    </p>
+                </div>
+
+                <div style="text-align: center; margin: 30px 0;">
+                    <div style="width: 140px; height: 140px; margin: 0 auto; background: rgba(31, 169, 115, 0.1); border-radius: 50%; border: 2px dashed var(--neon-green); display: flex; align-items: center; justify-content: center; flex-direction: column; font-size: 2.5rem;">
+                        🗂️
+                        <span style="font-size: 0.9rem; margin-top: 8px; color: var(--mint-glow);">Encrypted Upload</span>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 30px; padding-top: 30px; border-top: 1px solid rgba(31, 169, 115, 0.3);">
+                <label for="ttl_seconds">Token Expiry (seconds)</label>
+                <input type="number" name="ttl_seconds" id="ttl_seconds" placeholder="300 (default)" value="">
+                <p style="color: var(--mint-glow); margin-top: 8px; font-size: 0.9rem;">
+                    Leave empty for 300s default. Set to 0 for no expiration.
+                </p>
+            </div>
+
+            <button type="submit"><span>⚡ Generate Token</span></button>
+            <a href="/" class="btn" style="background: rgba(15, 62, 46, 0.5); border-color: rgba(31, 169, 115, 0.5);"><span>← Back to Home</span></a>
+        </form>
+    </div>
+
+    <script>
+        function switchMode(mode) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+            event.target.classList.add('active');
+            document.getElementById(mode + '_block').classList.add('active');
+            document.getElementById('mode_input').value = mode;
+        }
+
+        document.getElementById('field').addEventListener('change', function() {
+            const chip = document.getElementById('selected-chip');
+            chip.textContent = 'Attribute: ' + this.options[this.selectedIndex].text;
+        });
+    </script>
 </body>
 </html>

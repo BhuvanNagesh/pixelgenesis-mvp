@@ -1,46 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Add User Data</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile — PixelGenesis</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
+    <div class="particles">
+        <div class="particle" style="left: 12%;"></div>
+        <div class="particle" style="left: 28%;"></div>
+        <div class="particle" style="left: 48%;"></div>
+        <div class="particle" style="left: 68%;"></div>
+        <div class="particle" style="left: 88%;"></div>
+    </div>
 
-<div class="container">
+    <div class="container">
+        <h2>📝 Add User Profile</h2>
+        <p class="subtitle">Encrypted identity data with privacy-preserving hash storage</p>
 
-    <h2>👤 Add User Profile</h2>
-    <p class="subtitle">This data will be hashed & used for selective disclosure.</p>
+        <form method="POST">
+            <label for="name">Full Name</label>
+            <input type="text" name="name" id="name" placeholder="Enter your full name" required>
 
-    {% if error %}
-      <div class="error">{{ error }}</div>
-    {% endif %}
+            <label for="dob">Date of Birth</label>
+            <input type="date" name="dob" id="dob" required>
 
-    <form method="POST">
+            <label for="gender">Gender</label>
+            <select name="gender" id="gender" required>
+                <option value="">Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+            </select>
 
-        <label>Full Name:</label>
-        <input type="text" name="name" required>
+            <label for="aadhaar">Aadhaar Number</label>
+            <input type="text" name="aadhaar" id="aadhaar" placeholder="Will be hashed with SHA-256" required>
+            <p style="color: var(--mint-glow); margin-top: 8px; font-size: 0.95rem;">
+                🔒 Your Aadhaar will be converted to a cryptographic hash (SHA-256) and never stored in plaintext.
+            </p>
 
-        <label>Date of Birth:</label>
-        <input type="date" name="dob" required>
+            <div style="text-align: center; margin: 40px 0;">
+                <div style="width: 120px; height: 120px; margin: 0 auto; background: rgba(31, 169, 115, 0.1); border-radius: 50%; border: 2px dashed var(--neon-green); display: flex; align-items: center; justify-content: center; font-size: 3rem;">
+                    🔐
+                </div>
+            </div>
 
-        <label>Gender:</label>
-        <select name="gender" required>
-            <option value="">Select</option>
-            <option>male</option>
-            <option>female</option>
-            <option>other</option>
-        </select>
-
-        <label>Aadhaar Number:</label>
-        <input type="text" name="aadhaar" minlength="12" maxlength="12" placeholder="12-digit" required>
-
-        <button type="submit">Save Profile</button>
-    </form>
-
-    <br>
-    <a href="/">Home</a>
-
-</div>
-
+            <button type="submit"><span>💾 Save Profile</span></button>
+            <a href="/" class="btn" style="background: rgba(15, 62, 46, 0.5); border-color: rgba(31, 169, 115, 0.5);"><span>← Back to Home</span></a>
+        </form>
+    </div>
 </body>
 </html>
