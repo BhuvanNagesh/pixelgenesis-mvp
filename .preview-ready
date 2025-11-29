@@ -1,0 +1,18 @@
+✓ Static preview created successfully!
+
+Files added:
+- preview.html (33KB self-contained preview)
+- index.html (auto-redirects to preview)
+- PREVIEW_README.md (documentation)
+
+Your original Flask app (app.py, templates/, static/) is untouched.
+
+The preview showcases:
+✓ Cyber-green theme
+✓ 5 interactive sections
+✓ Smooth animations
+✓ Particle effects
+✓ Glassmorphism cards
+✓ Tab system for token generation
+
+Ready for viewing!

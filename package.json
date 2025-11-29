@@ -1,11 +1,12 @@
 {
   "name": "pixelgenesis",
   "version": "1.0.0",
-  "description": "PixelGenesis - Decentralized Privacy Identity DApp",
-  "main": "app.py",
+  "description": "PixelGenesis - Decentralized Privacy Identity DApp - Static Preview",
+  "main": "preview.html",
   "scripts": {
-    "start": "python3 app.py",
-    "dev": "python3 app.py"
+    "start": "npx serve -s . -p 5000",
+    "dev": "npx serve -s . -p 5000",
+    "preview": "npx serve -s . -p 5000"
   },
   "keywords": ["blockchain", "privacy", "identity", "zero-knowledge"],
   "author": "",

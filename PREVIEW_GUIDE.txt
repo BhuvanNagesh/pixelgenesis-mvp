@@ -1,0 +1,145 @@
+╔══════════════════════════════════════════════════════════════════╗
+║            PIXELGENESIS - STATIC PREVIEW READY                   ║
+║              Cyber-Green Futuristic UI Showcase                  ║
+╚══════════════════════════════════════════════════════════════════╝
+
+✅ WHAT WAS CREATED:
+
+1. preview.html (33KB)
+   → Self-contained static preview
+   → All CSS embedded inline
+   → Full cyber-green theme with animations
+   → 5 interactive sections
+
+2. index.html (1.3KB)
+   → Auto-redirects to preview.html
+   → Loading spinner animation
+
+3. package.json (updated)
+   → Configured to serve static files
+   → Main entry point: preview.html
+
+4. PREVIEW_README.md
+   → Documentation for the preview
+
+═══════════════════════════════════════════════════════════════════
+
+🎨 WHAT'S IN THE PREVIEW:
+
+Section 1: HOME PAGE
+  • Animated title "PixelGenesis"
+  • 8 navigation cards
+  • Floating particle effects
+  • Glowing hover states
+
+Section 2: CREATE DID
+  • Key generation display
+  • Glowing mono boxes for DID/keys
+  • Ripple animation effect
+  • Warning for private key
+
+Section 3: TOKEN GENERATION (3 Modes)
+  Mode A: Selective Disclosure
+    → Dropdown attribute selector
+    → Animated chip display
+  
+  Mode B: Predicate Proof
+    → Condition builder
+    → Zero-knowledge visualization
+  
+  Mode C: File Upload
+    → Dashed border upload box
+    → AES-256 encryption toggle
+    → Shamir 2-of-3 visualization
+
+Section 4: SUCCESS VIEW
+  • Animated SVG checkmark
+  • Profile data display
+  • SHA-256 hash visualization
+
+Section 5: SHAMIR RECOVERY
+  • 3-shard visual representation
+  • Merge animation concept
+  • Share input textarea
+
+═══════════════════════════════════════════════════════════════════
+
+🌟 ANIMATIONS INCLUDED:
+
+✓ Background pulse (8s infinite)
+✓ Scanning line (4s vertical sweep)
+✓ Floating particles (12-18s rise)
+✓ Container glow (3s pulse)
+✓ Text glow (2s heartbeat)
+✓ Border pulse (color shift)
+✓ Shimmer effect (horizontal sweep)
+✓ Button ripple on hover
+✓ Input laser scan on focus
+✓ Tab switch fade-in
+✓ Checkmark stroke animation
+
+═══════════════════════════════════════════════════════════════════
+
+🎨 EXACT COLOR PALETTE:
+
+--dark-bg: #0A1E17      (Dark background)
+--deep-green: #0F3E2E   (Deep green)
+--neon-green: #1FA973   (Neon green accent)
+--mint-glow: #C2FBE1    (Mint glow)
+--white: #FFFFFF        (Text)
+
+═══════════════════════════════════════════════════════════════════
+
+📂 ORIGINAL FILES (UNTOUCHED):
+
+✓ app.py (18,427 bytes) - Flask backend
+✓ templates/ (11 HTML files) - Jinja2 templates
+✓ static/style.css (27KB) - Full stylesheet
+✓ requirements.txt - Python dependencies
+✓ All other backend files
+
+═══════════════════════════════════════════════════════════════════
+
+🚀 HOW TO VIEW:
+
+Option 1: Direct Access (No Server)
+  → Just open preview.html in any browser
+  → Works offline, no dependencies
+
+Option 2: With npm serve
+  → npm start
+  → Opens on http://localhost:5000
+
+Option 3: Python HTTP server
+  → python3 -m http.server 8000
+  → Visit http://localhost:8000/preview.html
+
+═══════════════════════════════════════════════════════════════════
+
+📱 RESPONSIVE DESIGN:
+
+✓ Mobile-first approach
+✓ Breakpoint at 768px
+✓ Touch-friendly buttons
+✓ Stacked tabs on mobile
+✓ Optimized font sizes
+
+═══════════════════════════════════════════════════════════════════
+
+🎯 PERFECT FOR:
+
+• Hackathon demos
+• Portfolio showcase
+• Stakeholder presentations
+• UI/UX validation
+• Quick visual testing
+• Sharing without backend setup
+
+═══════════════════════════════════════════════════════════════════
+
+Built for Midnight Blockchain Track 3: Privacy Mini DApps
+Zero-knowledge • Privacy-first • Futuristic UI
+
+╔══════════════════════════════════════════════════════════════════╗
+║                    PREVIEW READY TO VIEW! 🚀                     ║
+╚══════════════════════════════════════════════════════════════════╝
